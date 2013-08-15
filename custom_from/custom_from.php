@@ -61,6 +61,13 @@ class	custom_from extends rcube_plugin
 			{
 				$identities = array ();
 				$recipients = array ();
+				$list_id    = isset ($headers->{"List-Id"}) ? $IMAP->decode_address_list ($headers->{"List-Id"}) : "";
+
+                                if (isset ($list_id))
+                                  {
+                                    $address = null;
+                                    goto end;
+                                  }
 
 				// Decode recipients from e-mail headers
 				$targets = array_merge
@@ -130,7 +137,7 @@ class	custom_from extends rcube_plugin
 				}
 			}
 		}
-
+		end:
 		$_SESSION['custom_from'] = $address;
 	}
 
